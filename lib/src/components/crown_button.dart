@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import '../theme/crown_theme.dart';
+import '../styles/crown_button_style.dart';
 
 enum CrownButtonVariant { filled, outlined, ghost }
 
@@ -12,7 +13,7 @@ class CrownButton extends StatefulWidget {
   final IconData? icon;
   final double? width;
   final double height;
-  final BorderRadius? borderRadius;
+  final CrownButtonStyle? customStyle;
 
   const CrownButton(
     this.label, {
@@ -24,7 +25,7 @@ class CrownButton extends StatefulWidget {
     this.icon,
     this.width,
     this.height = 50,
-    this.borderRadius,
+    this.customStyle,
   }) : super(key: key);
 
   @override
@@ -63,6 +64,7 @@ class _CrownButtonState extends State<CrownButton> with SingleTickerProviderStat
   @override
   Widget build(BuildContext context) {
     final theme = CrownTheme.of(context);
+    final style = widget.customStyle ?? _getDefaultStyle(theme);
 
     return GestureDetector(
       onTapDown: _onTapDown,
@@ -70,38 +72,35 @@ class _CrownButtonState extends State<CrownButton> with SingleTickerProviderStat
       onTapCancel: _onTapCancel,
       onTap: widget.isEnabled && !widget.isLoading ? widget.onPressed : null,
       child: ScaleTransition(
-        scale: Tween<double>(begin: 1.0, end: 0.95).animate(_animationController),
+        scale: Tween<double>(begin: 1.0, end: style.scale).animate(_animationController),
         child: Container(
           width: widget.width,
           height: widget.height,
+          padding: style.padding,
           decoration: BoxDecoration(
-            color: _getBackgroundColor(theme),
-            borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
-            border: widget.variant == CrownButtonVariant.outlined ? Border.all(color: theme.colors.primary, width: 2) : null,
-            boxShadow: widget.variant == CrownButtonVariant.filled && widget.isEnabled ? theme.borders.shadowMedium : [],
+            color: widget.isEnabled ? style.backgroundColor : theme.colors.disabled,
+            borderRadius: style.borderRadius,
+            border: style.borderWidth > 0 ? Border.all(color: style.borderColor ?? theme.colors.border, width: style.borderWidth) : null,
+            boxShadow: style.boxShadow,
           ),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
               onTap: widget.isEnabled && !widget.isLoading ? widget.onPressed : null,
-              borderRadius: widget.borderRadius ?? BorderRadius.circular(12),
+              borderRadius: style.borderRadius,
               child: Center(
                 child: widget.isLoading
-                    ? SizedBox(height: 24, width: 24, child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(theme.colors.textPrimary)))
+                    ? SizedBox(height: 24, width: 24, child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(style.foregroundColor ?? theme.colors.textPrimary)))
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           if (widget.icon != null) ...[
-                            Icon(widget.icon, color: _getTextColor(theme), size: 20),
+                            Icon(widget.icon, color: style.foregroundColor, size: 20),
                             SizedBox(width: 8),
                           ],
                           Text(
                             widget.label,
-                            style: TextStyle(
-                              color: _getTextColor(theme),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: style.textStyle,
                           ),
                         ],
                       ),
@@ -113,27 +112,14 @@ class _CrownButtonState extends State<CrownButton> with SingleTickerProviderStat
     );
   }
 
-  Color _getBackgroundColor(CrownThemeData theme) {
-    if (!widget.isEnabled) return theme.colors.disabled;
+  CrownButtonStyle _getDefaultStyle(CrownThemeData theme) {
     switch (widget.variant) {
       case CrownButtonVariant.filled:
-        return theme.colors.primary;
+        return CrownButtonStyle.primary(theme);
       case CrownButtonVariant.outlined:
-        return Colors.transparent;
+        return CrownButtonStyle.outlined(theme);
       case CrownButtonVariant.ghost:
-        return Colors.transparent;
-    }
-  }
-
-  Color _getTextColor(CrownThemeData theme) {
-    if (!widget.isEnabled) return theme.colors.textTertiary;
-    switch (widget.variant) {
-      case CrownButtonVariant.filled:
-        return Colors.white;
-      case CrownButtonVariant.outlined:
-        return theme.colors.primary;
-      case CrownButtonVariant.ghost:
-        return theme.colors.primary;
+        return CrownButtonStyle.ghost(theme);
     }
   }
 }

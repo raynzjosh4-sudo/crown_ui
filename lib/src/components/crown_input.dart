@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import '../theme/crown_theme.dart';
+import '../styles/crown_input_style.dart';
 
 class CrownInput extends StatefulWidget {
   final String? hintText;
@@ -17,6 +18,7 @@ class CrownInput extends StatefulWidget {
   final bool readOnly;
   final int? maxLength;
   final TextInputAction textInputAction;
+  final CrownInputStyle? customStyle;
 
   const CrownInput({
     Key? key,
@@ -35,6 +37,7 @@ class CrownInput extends StatefulWidget {
     this.readOnly = false,
     this.maxLength,
     this.textInputAction = TextInputAction.done,
+    this.customStyle,
   }) : super(key: key);
 
   @override
@@ -71,6 +74,7 @@ class _CrownInputState extends State<CrownInput> {
   @override
   Widget build(BuildContext context) {
     final theme = CrownTheme.of(context);
+    final style = widget.customStyle ?? CrownInputStyle.outlined(theme);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,8 +85,8 @@ class _CrownInputState extends State<CrownInput> {
         ],
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: _isFocused ? theme.borders.shadowMedium : theme.borders.shadowSmall,
+            borderRadius: style.borderRadius,
+            boxShadow: style.boxShadow,
           ),
           child: TextFormField(
             controller: widget.controller,
@@ -97,25 +101,25 @@ class _CrownInputState extends State<CrownInput> {
             onChanged: widget.onChanged,
             onTap: widget.onTap,
             validator: widget.validator,
-            style: TextStyle(fontSize: 16, color: theme.colors.textPrimary),
+            style: style.textStyle,
             decoration: InputDecoration(
               hintText: widget.hintText,
-              hintStyle: TextStyle(color: theme.colors.textSecondary, fontSize: 16),
-              prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon, color: _isFocused ? theme.colors.primary : theme.colors.textSecondary) : null,
+              hintStyle: style.hintStyle,
+              prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon, color: _isFocused ? style.focusedBorderColor : style.prefixIconColor) : null,
               suffixIcon: widget.suffixIcon != null || widget.obscureText
                   ? GestureDetector(
                       onTap: widget.obscureText ? () => setState(() => _obscureText = !_obscureText) : null,
-                      child: Icon(widget.obscureText ? (_obscureText ? Icons.visibility_off : Icons.visibility) : widget.suffixIcon, color: _isFocused ? theme.colors.primary : theme.colors.textSecondary),
+                      child: Icon(widget.obscureText ? (_obscureText ? Icons.visibility_off : Icons.visibility) : widget.suffixIcon, color: _isFocused ? style.focusedBorderColor : style.suffixIconColor),
                     )
                   : null,
               filled: true,
-              fillColor: theme.colors.background,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: theme.colors.border, width: 1)),
-              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: theme.colors.border, width: 1)),
-              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: theme.colors.primary, width: 2)),
-              errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: theme.colors.error, width: 1)),
-              focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: theme.colors.error, width: 2)),
+              fillColor: style.fillColor,
+              contentPadding: style.contentPadding,
+              border: OutlineInputBorder(borderRadius: style.borderRadius, borderSide: BorderSide(color: style.borderColor ?? theme.colors.border, width: style.borderWidth)),
+              enabledBorder: OutlineInputBorder(borderRadius: style.borderRadius, borderSide: BorderSide(color: style.borderColor ?? theme.colors.border, width: style.borderWidth)),
+              focusedBorder: OutlineInputBorder(borderRadius: style.borderRadius, borderSide: BorderSide(color: style.focusedBorderColor ?? theme.colors.primary, width: style.focusedBorderWidth)),
+              errorBorder: OutlineInputBorder(borderRadius: style.borderRadius, borderSide: BorderSide(color: style.errorBorderColor ?? theme.colors.error, width: style.borderWidth)),
+              focusedErrorBorder: OutlineInputBorder(borderRadius: style.borderRadius, borderSide: BorderSide(color: style.errorBorderColor ?? theme.colors.error, width: style.focusedBorderWidth)),
             ),
           ),
         ),
