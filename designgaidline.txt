@@ -1,0 +1,52 @@
+📱 iOS-Inspired Design Principles
+Before we create the components, here are the design guidelines we'll follow:
+
+iOS Design Characteristics:
+Soft, rounded corners (8-16px)
+Smooth shadows (subtle depth)
+Large, tappable touch targets (minimum 44x44pt)
+Generous spacing and padding
+Clean typography with clear hierarchy
+Smooth animations (200-300ms transitions)
+Haptic feedback (visual feedback on tap)
+Glassmorphism effects (semi-transparent overlays)
+Safe area handling (respect notches/safe areas)
+Accessibility-first approach
+Let's create 6 essential iOS-inspired components:
+Component 1: CrownText ✨
+Modern text widget with built-in theme integration
+
+Component 2: CrownButton ✨
+iOS-style button with multiple variants (filled, outlined, ghost)
+
+Component 3: CrownCard ✨
+Elegant card with shadow and border radius
+
+Component 4: CrownContainer ✨
+Flexible container with iOS styling
+
+Component 5: CrownInput ✨
+Premium text input field with focus states
+
+Component 6: CrownIcon ✨
+Styled icon widget with custom colors
+
+Let's start creating them!
+First, let me create all 6 components. Should I:
+
+Option A: Create all 6 files with full iOS-inspired implementation? (Recommended)
+
+Option B: Create them one by one so you can test each?
+
+Option C: Create the style files first, then the components?
+
+Let me know, and I'll generate all the code! 🚀
+
+Also, should these components have:
+
+✅ Loading states?
+✅ Disabled states?
+✅ Hover/pressed animations?
+✅ Custom color overrides?
+✅ Accessibility labels?
+Let's go! 🎨
