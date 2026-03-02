@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:crown_ui/crown_ui.dart';
+import 'package:flutter/material.dart';
 import '../theme/crown_theme.dart';
 
 class CrownCardStyle {

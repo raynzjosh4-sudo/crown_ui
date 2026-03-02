@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:crown_ui/crown_ui.dart';
+import 'package:flutter/material.dart';
 import '../theme/crown_theme.dart';
 
 class CrownButtonStyle {
@@ -32,7 +33,8 @@ class CrownButtonStyle {
       foregroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       borderRadius: const BorderRadius.all(Radius.circular(12)),
-      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
+      textStyle: TextStyle(
+          fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
       boxShadow: theme.borders.shadowMedium,
     );
   }
@@ -43,7 +45,10 @@ class CrownButtonStyle {
       foregroundColor: theme.colors.textPrimary,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       borderRadius: const BorderRadius.all(Radius.circular(12)),
-      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: theme.colors.textPrimary),
+      textStyle: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: theme.colors.textPrimary),
       boxShadow: theme.borders.shadowSmall,
     );
   }
@@ -56,7 +61,10 @@ class CrownButtonStyle {
       borderWidth: 2,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
       borderRadius: const BorderRadius.all(Radius.circular(12)),
-      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: theme.colors.primary),
+      textStyle: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: theme.colors.primary),
     );
   }
 
@@ -66,7 +74,10 @@ class CrownButtonStyle {
       foregroundColor: theme.colors.primary,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       borderRadius: const BorderRadius.all(Radius.circular(12)),
-      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: theme.colors.primary),
+      textStyle: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: theme.colors.primary),
     );
   }
 
@@ -76,7 +87,8 @@ class CrownButtonStyle {
       foregroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       borderRadius: const BorderRadius.all(Radius.circular(12)),
-      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
+      textStyle: TextStyle(
+          fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
       boxShadow: theme.borders.shadowMedium,
     );
   }
@@ -87,7 +99,8 @@ class CrownButtonStyle {
       foregroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       borderRadius: const BorderRadius.all(Radius.circular(12)),
-      textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
+      textStyle: TextStyle(
+          fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
       boxShadow: theme.borders.shadowMedium,
     );
   }

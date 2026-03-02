@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:crown_ui/crown_ui.dart';
+import 'package:flutter/material.dart';
 import '../theme/crown_theme.dart';
 
 class CrownInputStyle {
@@ -30,7 +31,8 @@ class CrownInputStyle {
     this.borderWidth = 1,
     this.focusedBorderWidth = 2,
     this.borderRadius = const BorderRadius.all(Radius.circular(12)),
-    this.contentPadding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    this.contentPadding =
+        const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     this.hintStyle,
     this.textStyle,
     this.boxShadow,

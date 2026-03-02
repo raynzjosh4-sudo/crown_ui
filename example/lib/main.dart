@@ -1,5 +1,6 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:crown_ui/crown_ui.dart';
+import 'styles/index.dart';
 
 void main() => runApp(const CrownUIExample());
 
@@ -19,74 +20,100 @@ class _CrownUIExampleState extends State<CrownUIExample> {
       child: MaterialApp(
         title: 'Crown UI',
         theme: ThemeData.dark(),
-        home: HomeScreen(onThemeToggle: () => setState(() => isDarkMode = !isDarkMode)),
+        home: const HomeScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
   }
 }
 
-class HomeScreen extends StatefulWidget {
-  final VoidCallback onThemeToggle;
-  const HomeScreen({Key? key, required this.onThemeToggle}) : super(key: key);
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+// ============================================================
+// EXAMPLE 1: STATELESS WIDGET
+// ============================================================
 
-class _HomeScreenState extends State<HomeScreen> {
-  final _controller = TextEditingController();
+/// Simple stateless widget using CrownStatelessWidget
+class HomeScreen extends CrownStatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final theme = CrownTheme.of(context);
-    return Scaffold(
-      backgroundColor: theme.colors.background,
+  Widget build(BuildContext context, CrownThemeData theme) {
+    return CrownScaffold(
+      title: 'Crown UI Examples',
+      currentBottomNavIndex: 0,
+      bottomNavItems: [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Stateless'),
+        BottomNavigationBarItem(icon: Icon(Icons.edit), label: 'Stateful'),
+        BottomNavigationBarItem(icon: Icon(Icons.info), label: 'About'),
+      ],
+      actions: [
+        Padding(
+          padding: EdgeInsets.all(theme.spacing.md),
+          child: CrownIcon(Icons.lightbulb_outline, size: 24, color: theme.colors.primary),
+        ),
+      ],
+      fab: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: theme.colors.primary,
+        child: Icon(Icons.add, color: Colors.white),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(theme.spacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Title
+              CrownText.display('Stateless Widget', color: theme.colors.primary),
+              SizedBox(height: theme.spacing.md),
+              CrownText.body('Simple widgets that do not change', color: theme.colors.textSecondary),
+              SizedBox(height: theme.spacing.lg),
+
+              // Code example
+              CrownCard(
+                customStyle: ComponentStyles.glassmorphismCard(theme),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CrownText.subheading('Before (Normal way):', color: theme.colors.primary),
+                    SizedBox(height: theme.spacing.sm),
+                    _codeBlock(theme, '''class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = CrownTheme.of(context);
+    return Text('Hello');
+  }
+}'''),
+                  ],
+                ),
+              ),
+              SizedBox(height: theme.spacing.md),
+
+              CrownCard(
+                customStyle: ComponentStyles.gradientBorderCard(theme),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CrownText.subheading('After (Crown way):', color: theme.colors.primary),
+                    SizedBox(height: theme.spacing.sm),
+                    _codeBlock(theme, '''class MyWidget extends CrownStatelessWidget {
+  @override
+  Widget build(BuildContext context, CrownThemeData theme) {
+    return CrownText('Hello');
+  }
+}'''),
+                  ],
+                ),
+              ),
+              SizedBox(height: theme.spacing.lg),
+
+              // Benefits
+              CrownText.heading('Benefits:', color: theme.colors.primary),
+              SizedBox(height: theme.spacing.md),
+              _benefitItem(theme, '✓', 'Theme injected automatically'),
+              _benefitItem(theme, '✓', 'No need to call CrownTheme.of()'),
+              _benefitItem(theme, '✓', 'Cleaner, simpler code'),
+              _benefitItem(theme, '✓', 'Consistent widget structure'),
               SizedBox(height: theme.spacing.xl),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  CrownText.display('Crown UI', color: theme.colors.primary),
-                  SizedBox(height: theme.spacing.sm),
-                  CrownText.body('iOS-Inspired Design System', color: theme.colors.textSecondary),
-                ])),
-                CrownIcon(Icons.lightbulb_outline, size: 32, color: theme.colors.primary, isButton: true, onTap: widget.onThemeToggle),
-              ]),
-              SizedBox(height: theme.spacing.x2l),
-              CrownText.heading('Button Styles', color: theme.colors.primary),
-              SizedBox(height: theme.spacing.md),
-              CrownButton('Primary Button', onPressed: () => _showMessage('Primary!'), variant: CrownButtonVariant.filled),
-              SizedBox(height: theme.spacing.md),
-              CrownButton('Success Button', onPressed: () => _showMessage('Success!'), customStyle: CrownButtonStyle.success(theme)),
-              SizedBox(height: theme.spacing.md),
-              CrownButton('Danger Button', onPressed: () => _showMessage('Danger!'), customStyle: CrownButtonStyle.danger(theme)),
-              SizedBox(height: theme.spacing.md),
-              CrownButton('Secondary Button', onPressed: () => _showMessage('Secondary!'), customStyle: CrownButtonStyle.secondary(theme)),
-              SizedBox(height: theme.spacing.md),
-              CrownButton('Outlined Button', onPressed: () => _showMessage('Outlined!'), variant: CrownButtonVariant.outlined),
-              SizedBox(height: theme.spacing.x2l),
-              CrownText.heading('Input Styles', color: theme.colors.primary),
-              SizedBox(height: theme.spacing.md),
-              CrownInput(labelText: 'Outlined Input', hintText: 'Default style', prefixIcon: Icons.person, customStyle: CrownInputStyle.outlined(theme)),
-              SizedBox(height: theme.spacing.md),
-              CrownInput(labelText: 'Filled Input', hintText: 'Filled style', prefixIcon: Icons.email, customStyle: CrownInputStyle.filled(theme)),
-              SizedBox(height: theme.spacing.md),
-              CrownInput(labelText: 'Underlined Input', hintText: 'Underlined style', customStyle: CrownInputStyle.underlined(theme)),
-              SizedBox(height: theme.spacing.x2l),
-              CrownText.heading('Card Styles', color: theme.colors.primary),
-              SizedBox(height: theme.spacing.md),
-              CrownCard(customStyle: CrownCardStyle.elevated(theme), child: Column(children: [CrownText.subheading('Elevated Card', color: theme.colors.primary), SizedBox(height: theme.spacing.sm), CrownText.body('This card has elevation shadow', color: theme.colors.textSecondary)])),
-              SizedBox(height: theme.spacing.md),
-              CrownCard(customStyle: CrownCardStyle.outlined(theme), child: Column(children: [CrownText.subheading('Outlined Card', color: theme.colors.primary), SizedBox(height: theme.spacing.sm), CrownText.body('This card has a border', color: theme.colors.textSecondary)])),
-              SizedBox(height: theme.spacing.md),
-              CrownCard(customStyle: CrownCardStyle.filled(theme), child: Column(children: [CrownText.subheading('Filled Card', color: theme.colors.primary), SizedBox(height: theme.spacing.sm), CrownText.body('This card has a filled background', color: theme.colors.textSecondary)])),
-              SizedBox(height: theme.spacing.md),
-              CrownCard(customStyle: CrownCardStyle.minimal(theme), child: Column(children: [CrownText.subheading('Minimal Card', color: theme.colors.primary), SizedBox(height: theme.spacing.sm), CrownText.body('This card is minimal with no shadow', color: theme.colors.textSecondary)])),
-              SizedBox(height: theme.spacing.x3l),
             ],
           ),
         ),
@@ -94,7 +121,156 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message), duration: Duration(seconds: 2)));
+  Widget _codeBlock(CrownThemeData theme, String code) {
+    return Container(
+      padding: EdgeInsets.all(theme.spacing.md),
+      decoration: BoxDecoration(
+        color: theme.colors.background,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: theme.colors.border),
+      ),
+      child: Text(
+        code,
+        style: TextStyle(
+          fontFamily: 'monospace',
+          fontSize: 12,
+          color: theme.colors.textSecondary,
+          height: 1.5,
+        ),
+      ),
+    );
+  }
+
+  Widget _benefitItem(CrownThemeData theme, String icon, String text) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: theme.spacing.sm),
+      child: Row(
+        children: [
+          CrownText.body(icon, color: theme.colors.success),
+          SizedBox(width: theme.spacing.md),
+          Expanded(child: CrownText.body(text, color: theme.colors.textPrimary)),
+        ],
+      ),
+    );
+  }
+}
+
+// ============================================================
+// EXAMPLE 2: STATEFUL WIDGET
+// ============================================================
+
+/// Stateful widget using CrownStatefulWidget
+class CounterExample extends CrownStatefulWidget {
+  const CounterExample({Key? key}) : super(key: key);
+
+  @override
+  State<CounterExample> createState() => _CounterExampleState();
+}
+
+class _CounterExampleState extends CrownState<CounterExample> {
+  int counter = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return CrownScaffold(
+      title: 'Stateful Example',
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CrownText.display('Counter: \', color: theme.colors.primary),
+            SizedBox(height: theme.spacing.lg),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CrownButton(
+                  'Decrease',
+                  onPressed: () => setState(() => counter--),
+                  customStyle: ComponentStyles.softButton(theme),
+                ),
+                SizedBox(width: theme.spacing.md),
+                CrownButton(
+                  'Increase',
+                  onPressed: () => setState(() => counter++),
+                  customStyle: ComponentStyles.premiumButton(theme),
+                ),
+              ],
+            ),
+            SizedBox(height: theme.spacing.xl),
+            CrownButton(
+              'Show Message',
+              onPressed: _showMessage,
+              customStyle: ComponentStyles.largeActionButton(theme),
+            ),
+            SizedBox(height: theme.spacing.md),
+            CrownButton(
+              'Show Dialog',
+              onPressed: _showDialog,
+              customStyle: ComponentStyles.minimalistButton(theme),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showMessage() {
+    showSnackBar('Counter is now: \');
+  }
+
+  void _showDialog() {
+    showCrownDialog(
+      title: 'Welcome',
+      message: 'The counter is at \',
+      confirmText: 'Great!',
+      onConfirm: () => Navigator.pop(context),
+    );
+  }
+}
+
+// ============================================================
+// EXAMPLE 3: SIMPLE REUSABLE COMPONENT
+// ============================================================
+
+/// Simple card component using CrownStatelessWidget
+class StatCard extends CrownStatelessWidget {
+  final String title;
+  final String value;
+  final IconData icon;
+
+  const StatCard({
+    Key? key,
+    required this.title,
+    required this.value,
+    required this.icon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, CrownThemeData theme) {
+    return CrownCard(
+      customStyle: ComponentStyles.compactCard(theme),
+      child: Row(
+        children: [
+          Container(
+            padding: EdgeInsets.all(theme.spacing.md),
+            decoration: BoxDecoration(
+              color: theme.colors.primary.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: CrownIcon(icon, color: theme.colors.primary, size: 24),
+          ),
+          SizedBox(width: theme.spacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CrownText.caption(title, color: theme.colors.textSecondary),
+                CrownText.subheading(value, color: theme.colors.textPrimary),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

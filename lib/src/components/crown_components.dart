@@ -4,3 +4,4 @@ export 'crown_card.dart';
 export 'crown_container.dart';
 export 'crown_input.dart';
 export 'crown_icon.dart';
+export 'crown_scaffold.dart';

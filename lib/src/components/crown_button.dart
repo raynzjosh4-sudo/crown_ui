@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:crown_ui/crown_ui.dart';
+import 'package:flutter/material.dart';
 import '../theme/crown_theme.dart';
 import '../styles/crown_button_style.dart';
 
@@ -32,13 +33,15 @@ class CrownButton extends StatefulWidget {
   State<CrownButton> createState() => _CrownButtonState();
 }
 
-class _CrownButtonState extends State<CrownButton> with SingleTickerProviderStateMixin {
+class _CrownButtonState extends State<CrownButton>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(duration: const Duration(milliseconds: 200), vsync: this);
+    _animationController = AnimationController(
+        duration: const Duration(milliseconds: 200), vsync: this);
   }
 
   @override
@@ -72,30 +75,47 @@ class _CrownButtonState extends State<CrownButton> with SingleTickerProviderStat
       onTapCancel: _onTapCancel,
       onTap: widget.isEnabled && !widget.isLoading ? widget.onPressed : null,
       child: ScaleTransition(
-        scale: Tween<double>(begin: 1.0, end: style.scale).animate(_animationController),
+        scale: Tween<double>(begin: 1.0, end: style.scale)
+            .animate(_animationController),
         child: Container(
           width: widget.width,
           height: widget.height,
           padding: style.padding,
           decoration: BoxDecoration(
-            color: widget.isEnabled ? style.backgroundColor : theme.colors.disabled,
+            color: widget.isEnabled
+                ? style.backgroundColor
+                : theme.colors.disabled,
             borderRadius: style.borderRadius,
-            border: style.borderWidth > 0 ? Border.all(color: style.borderColor ?? theme.colors.border, width: style.borderWidth) : null,
+            border: style.borderWidth > 0
+                ? Border.all(
+                    color: style.borderColor ?? theme.colors.border,
+                    width: style.borderWidth)
+                : null,
             boxShadow: style.boxShadow,
           ),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: widget.isEnabled && !widget.isLoading ? widget.onPressed : null,
+              onTap: widget.isEnabled && !widget.isLoading
+                  ? widget.onPressed
+                  : null,
               borderRadius: style.borderRadius,
               child: Center(
                 child: widget.isLoading
-                    ? SizedBox(height: 24, width: 24, child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(style.foregroundColor ?? theme.colors.textPrimary)))
+                    ? SizedBox(
+                        height: 24,
+                        width: 24,
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                style.foregroundColor ??
+                                    theme.colors.textPrimary)))
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           if (widget.icon != null) ...[
-                            Icon(widget.icon, color: style.foregroundColor, size: 20),
+                            Icon(widget.icon,
+                                color: style.foregroundColor, size: 20),
                             SizedBox(width: 8),
                           ],
                           Text(
