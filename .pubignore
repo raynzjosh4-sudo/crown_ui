@@ -1,0 +1,24 @@
+# Build outputs
+build/
+example/build/
+
+# Flutter/Dart/Pub cache
+.dart_tool/
+.pub/
+pubspec.lock
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+crowntext.txt
+designgaidline.txt
