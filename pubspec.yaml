@@ -3,9 +3,9 @@ description: A comprehensive, CSS-like UI framework for Flutter with 60+ pre-bui
 version: 0.1.0
 publish_to: https://pub.dev
 
-homepage: https://github.com/yourusername/crown_ui
-repository: https://github.com/yourusername/crown_ui
-issue_tracker: https://github.com/yourusername/crown_ui/issues
+homepage: https://github.com/raynzjosh4-sudo/crown_ui
+repository: https://github.com/raynzjosh4-sudo/crown_ui
+issue_tracker: https://github.com/raynzjosh4-sudo/crown_ui/issues
 documentation: https://pub.dev/packages/crown_ui
 
 environment:
