@@ -32,7 +32,7 @@ class CrownScaffold extends StatelessWidget {
   final int? currentBottomNavIndex;
 
   /// Floating action button
-  final Widget? fab;
+  final CrownFloatingActionButton? fab;
 
   /// Floating action button location
   final FloatingActionButtonLocation? fabLocation;

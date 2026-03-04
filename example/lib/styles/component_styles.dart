@@ -255,4 +255,162 @@ class ComponentStyles {
       ),
     );
   }
+
+  static CrownColumnStyle newColumnStyle(CrownThemeData theme) {
+    return const CrownColumnStyle(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+    );
+  }
+
+  /// Icon box style for component cards - displays component icon with colored background
+  static CrownContainerStyle componentIconBox(
+      CrownThemeData theme, Color color) {
+    return CrownContainerStyle(
+      width: 48,
+      height: 48,
+      backgroundColor: color.withOpacity(0.15),
+      borderRadius: 12,
+    );
+  }
+
+  /// Icon style for component cards - applies color and size
+  static CrownIconStyle componentIcon(CrownThemeData theme, Color color) {
+    return CrownIconStyle(
+      color: color,
+      size: 28,
+    );
+  }
+
+  // ============================================================
+  // TEXT STYLES
+  // ============================================================
+
+  /// Page header text style - large primary colored text
+  static TextStyle pageHeaderText(CrownThemeData theme) {
+    return TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.bold,
+      color: theme.colors.primary,
+    );
+  }
+
+  /// Subtitle text style - body text with secondary color
+  static TextStyle subtitleText(CrownThemeData theme) {
+    return TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: theme.colors.textSecondary,
+    );
+  }
+
+  /// Component card title text style - primary colored subheading
+  static TextStyle cardTitleText(CrownThemeData theme) {
+    return TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      color: theme.colors.textPrimary,
+    );
+  }
+
+  /// Component card description text style - secondary colored caption
+  static TextStyle cardDescriptionText(CrownThemeData theme) {
+    return TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      color: theme.colors.textSecondary,
+    );
+  }
+
+  /// Section header text style - primary colored subheading
+  static TextStyle sectionHeaderText(CrownThemeData theme) {
+    return TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      color: theme.colors.primary,
+    );
+  }
+
+  /// Feature text style - primary colored caption
+  static TextStyle featureText(CrownThemeData theme) {
+    return TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      color: theme.colors.textPrimary,
+    );
+  }
+
+  /// List tile title text style - primary colored body text
+  static TextStyle listTileTitleText(CrownThemeData theme) {
+    return TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: theme.colors.textPrimary,
+    );
+  }
+
+  /// List tile subtitle text style - secondary colored caption
+  static TextStyle listTileSubtitleText(CrownThemeData theme) {
+    return TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      color: theme.colors.textSecondary,
+    );
+  }
+
+  /// Section description text style - secondary colored body text
+  static TextStyle sectionDescriptionText(CrownThemeData theme) {
+    return TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      color: theme.colors.textSecondary,
+    );
+  }
+
+  /// List tile accent text style - primary colored body text for emphasis
+  static TextStyle listTileAccentText(CrownThemeData theme) {
+    return TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: theme.colors.primary,
+    );
+  }
+
+  // ============================================================
+  // DIVIDER STYLES
+  // ============================================================
+
+  /// Standard divider style for separating list items
+  static CrownDividerStyle standardDivider(CrownThemeData theme) {
+    return CrownDividerStyle.defaultStyle(theme);
+  }
+
+  /// Compact divider style for dense layouts with thin height
+  static CrownDividerStyle compactDivider(CrownThemeData theme) {
+    return CrownDividerStyle(
+      color: theme.colors.border,
+      height: 0.5,
+      thickness: 1,
+    );
+  }
+
+  // ============================================================
+  // SLIDER STYLES
+  // ============================================================
+
+  /// Default slider style with standard appearance
+  static CrownSliderStyle defaultSlider(CrownThemeData theme) {
+    return CrownSliderStyle.defaultStyle(theme);
+  }
+
+  /// Minimal slider style with subtle appearance for dense layouts
+  static CrownSliderStyle minimalSlider(CrownThemeData theme) {
+    return CrownSliderStyle.minimal(theme);
+  }
+
+  /// Prominent slider style with bold appearance and always-visible labels
+  static CrownSliderStyle prominentSlider(CrownThemeData theme) {
+    return CrownSliderStyle.prominent(theme);
+  }
 }

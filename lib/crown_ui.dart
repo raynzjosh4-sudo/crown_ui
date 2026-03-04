@@ -10,3 +10,4 @@ export 'src/theme/crown_theme_data.dart';
 export 'src/components/crown_components.dart';
 export 'src/styles/crown_styles.dart';
 export 'src/base/crown_base.dart';
+export 'src/navigation/index.dart';

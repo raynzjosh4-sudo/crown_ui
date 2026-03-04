@@ -1,56 +1,70 @@
 ﻿import 'package:flutter/material.dart';
-import '../theme/crown_theme.dart';
+import '../styles/crown_container_style.dart';
 
+/// A theme-aware container for Crown UI
+///
+/// Provides consistent styling for containers with support for
+/// background colors, shadows, borders, and rounded corners.
+///
+/// Usage:
+/// ```dart
+/// CrownContainer(
+///   style: CrownContainerStyle.padded(padding: 16),
+///   child: Text('Content'),
+/// )
+///
+/// CrownContainer(
+///   style: CrownContainerStyle.card(),
+///   child: Column(children: [...]),
+/// )
+///
+/// CrownContainer(
+///   style: CrownContainerStyle.bordered(borderColor: Colors.blue),
+///   child: Text('Bordered container'),
+/// )
+/// ```
 class CrownContainer extends StatelessWidget {
   final Widget? child;
+  final CrownContainerStyle? style;
   final Color? backgroundColor;
-  final Color? borderColor;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final double? borderRadius;
   final double? width;
   final double? height;
-  final EdgeInsets padding;
-  final EdgeInsets margin;
-  final BorderRadius? borderRadius;
-  final double borderWidth;
-  final List<BoxShadow>? boxShadow;
-  final AlignmentGeometry alignment;
-  final VoidCallback? onTap;
+  final AlignmentGeometry? alignment;
 
   const CrownContainer({
     Key? key,
     this.child,
+    this.style,
     this.backgroundColor,
-    this.borderColor,
+    this.padding,
+    this.margin,
+    this.borderRadius,
     this.width,
     this.height,
-    this.padding = const EdgeInsets.all(16),
-    this.margin = EdgeInsets.zero,
-    this.borderRadius,
-    this.borderWidth = 0,
-    this.boxShadow,
-    this.alignment = Alignment.center,
-    this.onTap,
+    this.alignment,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final theme = CrownTheme.of(context);
+    final resolvedStyle = style ?? CrownContainerStyle.defaultStyle();
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: width,
-        height: height,
-        margin: margin,
-        padding: padding,
-        alignment: alignment,
-        decoration: BoxDecoration(
-          color: backgroundColor ?? theme.colors.surface,
-          borderRadius: borderRadius ?? BorderRadius.circular(12),
-          border: borderWidth > 0 ? Border.all(color: borderColor ?? theme.colors.border, width: borderWidth) : null,
-          boxShadow: boxShadow ?? theme.borders.shadowSmall,
-        ),
-        child: child,
+    return Container(
+      width: width ?? resolvedStyle.width,
+      height: height ?? resolvedStyle.height,
+      alignment: alignment,
+      padding: padding ?? resolvedStyle.padding,
+      margin: margin ?? resolvedStyle.margin,
+      decoration: BoxDecoration(
+        color: backgroundColor ?? resolvedStyle.backgroundColor,
+        borderRadius:
+            BorderRadius.circular(borderRadius ?? resolvedStyle.borderRadius),
+        border: resolvedStyle.border,
+        boxShadow: resolvedStyle.boxShadow,
       ),
+      child: child,
     );
   }
 }

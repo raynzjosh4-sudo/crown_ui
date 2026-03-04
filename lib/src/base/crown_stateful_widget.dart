@@ -1,104 +1,55 @@
-﻿import 'package:flutter/material.dart';
+﻿import 'package:crown_ui/crown_ui.dart';
+import 'package:flutter/material.dart';
 import '../theme/crown_theme.dart';
 
-/// CrownStatefulWidget
-/// 
-/// Base class for stateful widgets with built-in Crown theme support
-/// 
-/// Automatically provides:
-/// - Theme access via [theme] property in state
-/// - Safe and convenient widget building
-/// - Consistent structure across app
-/// - Easy rebuild on theme change
-/// 
+/// Simple stateful widget base for Crown UI
+///
+/// Combines StatefulWidget and State into a single easy-to-use class.
+/// Just add your state fields and implement buildWidget().
+/// No need to override or create separate state classes.
+///
 /// Usage:
 /// `dart
-/// class MyWidget extends CrownStatefulWidget {
-///   @override
-///   State<MyWidget> createState() => _MyWidgetState();
-/// }
-/// 
-/// class _MyWidgetState extends CrownState<MyWidget> {
-///   @override
-///   Widget build(BuildContext context) {
-///     // Access theme via this.theme
-///     return CrownButton('Click me', onPressed: () {});
+/// class Counter extends CrownStatefulWidget {
+///   int count = 0;
+///
+///   buildWidget(BuildContext context, CrownThemeData theme) {
+///     return Column(
+///       children: [
+///         Text('\$count'),
+///         Button('Increment', onPressed: () {
+///           // Use callSetState to trigger rebuild
+///           callSetState(() => count++);
+///         }),
+///       ],
+///     );
 ///   }
 /// }
 /// `
 
 abstract class CrownStatefulWidget extends StatefulWidget {
-  const CrownStatefulWidget({Key? key}) : super(key: key);
+  CrownStatefulWidget({Key? key}) : super(key: key);
+
+  late Function(VoidCallback) callSetState;
+
+  /// Build your widget. Wrap with CrownTheme if you need theme access.
+  /// No @override needed.
+  Widget buildWidget(BuildContext context);
+
+  @override
+  State<CrownStatefulWidget> createState() => _CrownStatefulWidgetState();
 }
 
-/// Base state class with automatic theme support
-/// 
-/// Provides:
-/// - [theme] property for easy theme access
-/// - Automatic theme change detection
-/// - Clean state management
-
-abstract class CrownState<T extends CrownStatefulWidget> extends State<T> {
-  /// Get current theme without calling CrownTheme.of(context)
-  CrownThemeData get theme => CrownTheme.of(context);
-
-  /// Override this to build your widget with automatic theme support
+class _CrownStatefulWidgetState extends State<CrownStatefulWidget> {
   @override
-  Widget build(BuildContext context);
-
-  /// Listen to theme changes if needed
-  /// Override this method to react to theme changes
-  void onThemeChanged(CrownThemeData oldTheme, CrownThemeData newTheme) {}
-
-  /// Helper method to show snackbar with theme styling
-  void showSnackBar(
-    String message, {
-    Duration duration = const Duration(seconds: 2),
-    SnackBarAction? action,
-  }) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: duration,
-        action: action,
-        backgroundColor: theme.colors.primary,
-      ),
-    );
+  void initState() {
+    super.initState();
+    // Bind setState to the widget
+    widget.callSetState = setState;
   }
 
-  /// Helper method to show themed dialog
-  void showCrownDialog({
-    required String title,
-    required String message,
-    String confirmText = 'OK',
-    String? cancelText,
-    VoidCallback? onConfirm,
-    VoidCallback? onCancel,
-  }) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          title,
-          style: theme.typography.headingMedium.copyWith(color: theme.colors.textPrimary),
-        ),
-        content: Text(
-          message,
-          style: theme.typography.bodyMedium.copyWith(color: theme.colors.textSecondary),
-        ),
-        backgroundColor: theme.colors.surface,
-        actions: [
-          if (cancelText != null)
-            TextButton(
-              onPressed: onCancel,
-              child: Text(cancelText, style: TextStyle(color: theme.colors.textSecondary)),
-            ),
-          TextButton(
-            onPressed: onConfirm,
-            child: Text(confirmText, style: TextStyle(color: theme.colors.primary)),
-          ),
-        ],
-      ),
-    );
+  @override
+  Widget build(BuildContext context) {
+    return widget.buildWidget(context);
   }
 }
