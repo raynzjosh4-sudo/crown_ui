@@ -1,7 +1,6 @@
 ﻿name: crown_ui
 description: A comprehensive, CSS-like UI framework for Flutter with 60+ pre-built components, design tokens, themes, and multi-platform support. Inspired by web development and Kivy, Crown UI provides a modern alternative to Material Design with seamless support for iOS, Android, Windows, macOS, and Web.
 version: 0.1.0
-publish_to: https://pub.dev
 
 homepage: https://github.com/raynzjosh4-sudo/crown_ui
 repository: https://github.com/raynzjosh4-sudo/crown_ui
